@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
 
 #[ORM\Entity(repositoryClass: CafeRepository::class)]
 class Cafe
@@ -46,9 +47,19 @@ class Cafe
     #[ORM\OneToMany(mappedBy: 'cafe', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
 
+    #[ORM\OneToMany(mappedBy: 'cafe', targetEntity: Likes::class, orphanRemoval: true)]
+    private Collection $likes;
+
+    #[ORM\OneToMany(mappedBy: 'cafe', targetEntity: Discover::class, orphanRemoval: true)]
+    private Collection $discovers;
+
+    private File $pictureFile;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->likes = new ArrayCollection();
+        $this->discovers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -76,6 +87,17 @@ class Cafe
     public function setPictureUrl(string $pictureUrl): self
     {
         $this->pictureUrl = $pictureUrl;
+
+        return $this;
+    }
+    public function getPictureFile(): ?File //recuperation le fichier jpg(eg)
+    {
+        return $this->pictureFile;
+    }
+
+    public function setPictureFile(File $pictureFile): self
+    {
+        $this->pictureFile = $pictureFile;
 
         return $this;
     }
@@ -188,6 +210,66 @@ class Cafe
             // set the owning side to null (unless already changed)
             if ($comment->getCafe() === $this) {
                 $comment->setCafe(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Likes>
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Likes $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes->add($like);
+            $like->setCafe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Likes $like): self
+    {
+        if ($this->likes->removeElement($like)) {
+            // set the owning side to null (unless already changed)
+            if ($like->getCafe() === $this) {
+                $like->setCafe(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Discover>
+     */
+    public function getDiscovers(): Collection
+    {
+        return $this->discovers;
+    }
+
+    public function addDiscover(Discover $discover): self
+    {
+        if (!$this->discovers->contains($discover)) {
+            $this->discovers->add($discover);
+            $discover->setCafe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDiscover(Discover $discover): self
+    {
+        if ($this->discovers->removeElement($discover)) {
+            // set the owning side to null (unless already changed)
+            if ($discover->getCafe() === $this) {
+                $discover->setCafe(null);
             }
         }
 
