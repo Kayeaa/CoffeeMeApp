@@ -6,23 +6,49 @@ use App\Entity\Cafe;
 use App\Form\CafeType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bridge\Doctrine\Form\Type\DoctrineType;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CafeController extends AbstractController
 {
     #[Route('/cafe', name: 'app_cafe')]
-    public function index(): Response
+    public function index(ManagerRegistry $doctrine): Response
     {
-        return $this->render('cafe/index.html.twig', [
-            'controller_name' => 'CafeController',
-        ]);
+        //FIND ALL CAFES
+        $em = $doctrine->getManager();
+        $rep = $em->getRepository(Cafe::class);
+
+        $cafes = $rep->findAll();
+        $vars = ['cafes' => $cafes];
+ 
+        return $this->render('cafe/index.html.twig', $vars);
     }
 
-    #[Route("cafe/ajouter", name: 'cafe_register')]
+    #[Route('/cafe/{id}')]
+    public function findOneCafe(ManagerRegistry $doctrine, $id): Response
+    {
+        //FIND ONE CAFES BY ID
+        $em = $doctrine->getManager();
+        $rep = $em->getRepository(Cafe::class);
+
+        $cafe = $rep->find($id);
+
+        if (!$cafe) {
+            throw $this->createNotFoundException('The entity does not exist');
+        }
+        
+        $vars = ['oneCafe' => $cafe];
+ 
+        return $this->render('details.html.twig', $vars);
+    }
+
+
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route("/cafe/add", name: 'cafe_register')]
     public function addCafe(Request $req, EntityManagerInterface $manager)
     {
         $cafe = new Cafe();
@@ -46,5 +72,17 @@ class CafeController extends AbstractController
         }
 
         return $this->render('/cafe/ajouter.html.twig', $vars);
+    }
+
+    #[Route ("/allcafe", name: 'allcafe')]
+    public function allcafe(ManagerRegistry $doctrine)
+    {
+        $em = $doctrine->getManager();
+        $rep = $em->getRepository(Cafe::class);
+
+        $cafes = $rep->findAll();
+        $vars = ['cafe' => $cafes];
+
+        return $this->render("allcafe.html.twig", $vars);
     }
 }
