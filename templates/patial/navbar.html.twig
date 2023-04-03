@@ -1,0 +1,45 @@
+{# NAVIGATION  #}
+
+<nav class="flex items-center justify-between flex-wrap bg-red-400 p-4">
+  <div class="flex items-center flex-shrink-0 text-white mr-6">
+    <img src="../../public/logo/coffeeme_Logo-white.png" class="fill-current h-8 w-8 mr-2" width="54" height="54" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg">
+    <a href="{{path('app_home')}}" class="font-semibold text-xl tracking-tight">CoffeeMe</a>
+  </div>
+  <div class="block lg:hidden">
+    <button class="flex items-center px-3 py-2 border rounded text-red-400 border-red-400 hover:text-white hover:border-white">
+      <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+    </button>
+  </div>
+  <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+    <div class="text-sm lg:flex-grow">
+      <a href="{{path('app_cafe')}}" class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
+        Map
+      </a>
+      <a href="{{path('app_concept')}}" class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
+        Concept
+      </a>
+      <a href="{{path('app_contact')}}" class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white">
+        Contact
+      </a>
+    </div>
+    {% if is_granted('ROLE_ADMIN') %}
+      <div>
+        <a href="{{path('cafe_register')}}" class="inline-block text-sm px-4 py-2 leading-none text-white mt-4 lg:mt-0">Add a cafe</a>
+      </div>
+    {% endif %} 
+    {% if app.user %}
+            <div>
+        <a href="{{path('app_logout')}}" class="inline-block text-sm px-4 py-2 leading-none text-white mt-4 lg:mt-0">Disconnect</a>
+      </div>
+    {% endif %} 
+    {% if app.user %}
+    <div>
+      <a href="#" class="inline-block text-sm px-4 py-2 leading-none text-white border rounded hover:text-red-400 hover:bg-white mt-4 lg:mt-0">MY ACCOUNT</a>
+    </div>
+    {% else %} 
+      <div>
+        <a href="{{path('app_login')}}" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-red-400 hover:bg-white mt-4 lg:mt-0">MY ACCOUNT</a>
+      </div>
+    {% endif %} 
+  </div>
+</nav>

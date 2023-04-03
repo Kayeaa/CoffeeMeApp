@@ -1,20 +1,114 @@
-{% extends 'base.html.twig' %}
+{% extends 'base.html.twig' %} 
 
-{% block title %}Hello CafeController!{% endblock %}
+{% block title %}Cafe{% endblock %} 
+ 
 
-{% block body %}
-    <style>
-        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-        .example-wrapper code { background: #FAFAFA; padding: 2px 6px; }
-    </style>
+{% block body %} 
 
-    <div class="example-wrapper">
-        <h1>{{cafe.name}}</h1>
-        <h2>{{cafe.note}}</h2>
-        <img src="{{cafe.pictureUrl}}" alt="{{cafe.name}} image">
-        <br>
-        <p>{{cafe.box}}, {{cafe.number}}<br>
-            {{cafe.street}}<br>
-            {{cafe.city}}{{cafe.country}}</p>
-    </div>
-{% endblock %}
+    <h1>Cafe</h1> 
+
+
+    <table class="table"> 
+
+        <tbody> 
+
+            <tr> 
+
+                <th>Id</th> 
+
+                <td>{{ cafe.id}}</td> 
+
+            </tr> 
+
+            <tr> 
+
+                <th>Name</th> 
+
+                <td>{{ cafe.name }}</td> 
+
+            </tr> 
+
+            <tr> 
+
+                <th>Picture</th> 
+
+                <td>{{ cafe.pictureUrl }}</td> 
+
+            </tr> 
+
+            <tr> 
+
+                <th>Box</th> 
+
+                <td>{{ cafe.box }}</td> 
+
+            </tr> 
+
+            <tr> 
+
+                <th>Number</th> 
+
+                <td>{{ cafe.number }}</td> 
+
+            </tr> 
+
+            <tr> 
+
+                <th>Street</th> 
+
+                <td>{{ cafe.street }}</td> 
+
+            </tr> 
+
+            <tr> 
+
+                <th>ZipCode</th> 
+
+                <td>{{ cafe.zipCode }}</td> 
+
+            </tr> 
+
+            <tr> 
+
+                <th>City</th> 
+
+                <td>{{ cafe.city }}</td> 
+
+            </tr> 
+
+            <tr> 
+
+                <th>Country</th> 
+
+                <td>{{ cafe.country }}</td> 
+
+            </tr> 
+
+            <tr> 
+
+                <th>Rating</th> 
+
+                <td>{{ cafe.rating }}</td> 
+
+            </tr> 
+
+                        <tr> 
+
+                <th>Comments</th> 
+
+                <td>{{ cafe.Comments}}</td> 
+
+            </tr>
+
+        </tbody> 
+
+    </table> 
+
+    <a href="{{ path('app_cafe') }}">back to list</a> 
+
+    <a href="{{ path('cafe_edit', {'id': cafe.id}) }}">edit</a> 
+
+    {{ include('cafe/delete.html.twig') }} 
+
+{% endblock %} 
+

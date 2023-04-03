@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %} 
+
+ 
+
+{% block title %}Edit Cafe{% endblock %} 
+
+ 
+
+{% block body %} 
+
+    <h1>Edit Cafe</h1> 
+
+ 
+
+    {{ include('cafe/_form.html.twig', {'button_label': 'Update'}) }} 
+
+    <a href="{{ path('app_cafe_index') }}">back to list</a> 
+
+ 
+
+    {{ include('cafe/_delete_form.html.twig') }} 
+
+{% endblock %} 

@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Cafe;
 use App\Form\CafeType;
-use Doctrine\ORM\EntityManager;
+use App\Repository\CafeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CafeController extends AbstractController
 {
-    #[Route('/cafe', name: 'app_cafe')]
+    #[Route('/cafe', name: 'app_cafe', methods: ['GET'])]
     public function index(ManagerRegistry $doctrine): Response
     {
         //FIND ALL CAFES
@@ -28,26 +28,7 @@ class CafeController extends AbstractController
         return $this->render('cafe/index.html.twig', $vars);
     }
 
-    #[Route('/cafe/{id}')]
-    public function findOneCafe(ManagerRegistry $doctrine, $id): Response
-    {
-        //FIND ONE CAFES BY ID
-        $em = $doctrine->getManager();
-        $rep = $em->getRepository(Cafe::class);
-
-        $cafe = $rep->find($id);
-
-        if (!$cafe) {
-            throw $this->createNotFoundException('The entity does not exist');
-        }
-        
-        $vars = ['oneCafe' => $cafe];
- 
-        return $this->render('details.html.twig', $vars);
-    }
-
-
-    #[IsGranted('ROLE_ADMIN')]
+    //#[IsGranted('ROLE_ADMIN')]
     #[Route("/cafe/add", name: 'cafe_register')]
     public function addCafe(Request $req, EntityManagerInterface $manager)
     {
@@ -68,21 +49,69 @@ class CafeController extends AbstractController
             }
             $manager->persist($cafe);
             $manager->flush();
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_cafe');
         }
 
-        return $this->render('/cafe/ajouter.html.twig', $vars);
+        return $this->render('/cafe/add.html.twig', $vars);
     }
 
-    #[Route ("/allcafe", name: 'allcafe')]
-    public function allcafe(ManagerRegistry $doctrine)
+
+
+    #[Route('/cafe/{id}', name: 'cafe_details')]
+    public function findOneCafe(ManagerRegistry $doctrine, $id): Response
     {
+        //FIND ONE CAFES BY ID
         $em = $doctrine->getManager();
         $rep = $em->getRepository(Cafe::class);
 
-        $cafes = $rep->findAll();
-        $vars = ['cafe' => $cafes];
+        $cafe = $rep->find($id);
 
-        return $this->render("allcafe.html.twig", $vars);
+        if (!$cafe) {
+            throw $this->createNotFoundException('The entity does not exist');
+        }
+        
+        $vars = ['oneCafe' => $cafe];
+ 
+        return $this->render('cafe/details.html.twig', $vars);
     }
+
+
+    #[Route('cafe/{id}/edit', name: 'cafe_edit', methods: ['GET', 'POST'])] 
+
+    public function edit(Request $request, Cafe $cafe, CafeRepository $cafeRepository): Response 
+    { 
+        $form = $this->createForm(CafeType::class, $cafe); 
+
+        $form->handleRequest($request); 
+
+
+        if ($form->isSubmitted() && $form->isValid()) { 
+
+            $cafeRepository->save($cafe, true); 
+
+            return $this->redirectToRoute('app_cafe', [], Response::HTTP_SEE_OTHER);
+        } 
+
+        return $this->renderForm('cafe/edit.html.twig', [ 
+
+            'cafe' => $cafe, 
+            'form' => $form, 
+
+        ]); 
+
+    } 
+
+     
+
+    #[Route('cafe/{id}/delete', name: 'cafe_delete', methods: ['POST'])] 
+
+    public function delete(Request $request, Cafe $cafe, CafeRepository $cafeRepository): Response 
+    { 
+        if ($this->isCsrfTokenValid('delete'.$cafe->getId(), $request->request->get('_token'))) { 
+
+            $cafeRepository->remove($cafe, true); 
+        } 
+        return $this->redirectToRoute('app_cafe', [], Response::HTTP_SEE_OTHER); 
+    } 
+ 
 }
