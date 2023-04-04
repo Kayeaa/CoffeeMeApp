@@ -22,24 +22,24 @@
         Contact
       </a>
     </div>
-    {% if is_granted('ROLE_ADMIN') %}
+    {# {% if is_granted('ROLE_ADMIN') %} #}
       <div>
         <a href="{{path('cafe_register')}}" class="inline-block text-sm px-4 py-2 leading-none text-white mt-4 lg:mt-0">Add a cafe</a>
       </div>
-    {% endif %} 
-    {% if app.user %}
+    {# {% endif %} 
+    {% if app.user %} #}
             <div>
         <a href="{{path('app_logout')}}" class="inline-block text-sm px-4 py-2 leading-none text-white mt-4 lg:mt-0">Disconnect</a>
       </div>
-    {% endif %} 
-    {% if app.user %}
+    {# {% endif %} 
+    {% if app.user %} #}
     <div>
       <a href="#" class="inline-block text-sm px-4 py-2 leading-none text-white border rounded hover:text-red-400 hover:bg-white mt-4 lg:mt-0">MY ACCOUNT</a>
     </div>
-    {% else %} 
+    {# {% else %}  #}
       <div>
         <a href="{{path('app_login')}}" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-red-400 hover:bg-white mt-4 lg:mt-0">MY ACCOUNT</a>
       </div>
-    {% endif %} 
+    {# {% endif %}  #}
   </div>
 </nav>

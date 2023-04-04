@@ -80,4 +80,10 @@ class Comment
         return $this;
     }
 
+    public function __construct()
+    {
+        $this->createDate = new \DateTime();
+    }
+
+
 }

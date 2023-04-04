@@ -34,14 +34,14 @@ class CafeController extends AbstractController
     {
         $cafe = new Cafe();
         
-        $formulaireCafe = $this->createForm(CafeType::class,$cafe);
-        $formulaireCafe->handleRequest($req);
+        $formCafe = $this->createForm(CafeType::class,$cafe);
+        $formCafe->handleRequest($req);
 
         // on envoie un objet FormView à la vue pour qu'elle puisse 
         // faire le rendu, pas le formulaire en soi
-        $vars = ['FormulaireCafe' => $formulaireCafe->createView()];
+        $vars = ['FormulaireCafe' => $formCafe->createView()];
 
-        if ($formulaireCafe->isSubmitted() && $formulaireCafe->isValid()){
+        if ($formCafe->isSubmitted() && $formCafe->isValid()){
             if($cafe->getPictureFile() !== null){
                 $name = uniqid() . '.' . ($cafe->getPictureFile()->guessExtension());
                 $cafe->getPictureFile()->move('../public/images', $name);
@@ -61,6 +61,8 @@ class CafeController extends AbstractController
     public function findOneCafe(ManagerRegistry $doctrine, $id): Response
     {
         //FIND ONE CAFES BY ID
+
+        
         $em = $doctrine->getManager();
         $rep = $em->getRepository(Cafe::class);
 
@@ -70,8 +72,8 @@ class CafeController extends AbstractController
             throw $this->createNotFoundException('The entity does not exist');
         }
         
-        $vars = ['oneCafe' => $cafe];
- 
+        $vars = ['cafe' => $cafe];
+      ;
         return $this->render('cafe/details.html.twig', $vars);
     }
 
