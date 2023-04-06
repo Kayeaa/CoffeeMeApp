@@ -62,7 +62,6 @@ class CafeController extends AbstractController
     {
         //FIND ONE CAFES BY ID
 
-        
         $em = $doctrine->getManager();
         $rep = $em->getRepository(Cafe::class);
 
@@ -105,15 +104,16 @@ class CafeController extends AbstractController
 
      
 
-    #[Route('cafe/{id}/delete', name: 'cafe_delete', methods: ['POST'])] 
-
-    public function delete(Request $request, Cafe $cafe, CafeRepository $cafeRepository): Response 
+    #[Route("/cafe/{id}/delete/", name: 'cafe_delete', methods : ['GET'])]
+    public function cafeDelete(ManagerRegistry $doctrine, $id)
     { 
-        if ($this->isCsrfTokenValid('delete'.$cafe->getId(), $request->request->get('_token'))) { 
+        $em = $doctrine->getManager();
+        $oneCafe = $em->getRepository(Cafe::class)->find($id);
+        
+        $em->remove($oneCafe);
+        $em->flush();
+        return $this->render("cafe/delete.html.twig");
 
-            $cafeRepository->remove($cafe, true); 
-        } 
-        return $this->redirectToRoute('app_cafe', [], Response::HTTP_SEE_OTHER); 
     } 
  
 }

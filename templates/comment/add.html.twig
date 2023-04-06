@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add a comment - CoffeeMe{% endblock %}
+
+
+{% block body %}
+
+    <div class="example-wrapper">
+        <h1>Share your thoughts about the cafe</h1>
+        <p>With kindness and goodwill</p>
+
+        {{form_start(FormComment)}}
+        {{ form_widget (FormComment) }}
+        <input type="submit" value="Envoyer" />
+        {{form_end(FormComment)}}
+
+    </div>
+
+{% endblock %}

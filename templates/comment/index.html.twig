@@ -87,16 +87,16 @@
                                         </div>
                                     </td>
 
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap text-red-400">
+                                    <td class="px-4 py-4 text-sm whitespace-nowrap text-gray-700">
                                     <a href="{{ path('comment_details',{id: comment.id}) }}">Detail</a> 
                                     </td>
                                     {# IF YOU ARE THE USER YOU CAN UPDATE & DELETE YOUR OWN COMMENT #}
                                     {# IF YOU ARE ADMIN YOU CAN DELETE THE COMMENT #}
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap text-red-400">
+                                    <td class="px-4 py-4 text-sm whitespace-nowrap text-gray-700">
                                     <a href="{{ path('comment_edit',{id: comment.id}) }}">Update</a> 
                                     </td>
 
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap text-red-400">
+                                    <td class="px-4 py-4 text-sm whitespace-nowrap text-gray-700">
                                     <a href="{{ path('comment_delete',{id: comment.id}) }}">Delete</a> 
                                     </td>
 

@@ -2,7 +2,7 @@
 
 <nav class="flex items-center justify-between flex-wrap bg-red-400 p-4">
   <div class="flex items-center flex-shrink-0 text-white mr-6">
-    <img src="../../public/logo/coffeeme_Logo-white.png" class="fill-current h-8 w-8 mr-2" width="54" height="54" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg">
+    <img src="C:\xampp\htdocs\COFFE-ME_Symfony\CoffeeMeApp\public\logo\coffeeme_Logo-500x500.png" class="fill-current h-8 w-8 mr-2" width="54" height="54" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg">
     <a href="{{path('app_home')}}" class="font-semibold text-xl tracking-tight">CoffeeMe</a>
   </div>
   <div class="block lg:hidden">
@@ -22,12 +22,7 @@
         Contact
       </a>
     </div>
-    {# {% if is_granted('ROLE_ADMIN') %} #}
-      <div>
-        <a href="{{path('cafe_register')}}" class="inline-block text-sm px-4 py-2 leading-none text-white mt-4 lg:mt-0">Add a cafe</a>
-      </div>
-    {# {% endif %} 
-    {% if app.user %} #}
+    {#{% if app.user %} #}
             <div>
         <a href="{{path('app_logout')}}" class="inline-block text-sm px-4 py-2 leading-none text-white mt-4 lg:mt-0">Disconnect</a>
       </div>

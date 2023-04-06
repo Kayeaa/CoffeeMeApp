@@ -96,7 +96,8 @@
         </tbody> 
 
     </table> 
-    
+    <a href= "{{path('cafe_delete', {id : cafe.id} )}}" class="text-l">Delete cafe</a>
+
     <h3>Comments</h3> 
     <a href= "{{path('comment_register', {id : cafe.id} )}}" class="text-l">Add a comment</a>
 
@@ -133,6 +134,9 @@
                     {# YOUR COMMENT CAN BE DELETED #}
                     <td class="px-6 py-4 text-right">
                         <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                    </td>
+                     <td class="px-6 py-4 text-right">
+                        <a href= "{{path('comment_delete', {id : comment.id} )}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
                     </td>
                 </tr>
                 {% endfor %}

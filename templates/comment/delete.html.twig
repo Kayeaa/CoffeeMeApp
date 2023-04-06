@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CommentController!{% endblock %}
+
+{% block body %}
+
+<h2>Your comment has been deleted</h2>
+<a href="{{path('cafe_details'), {id: cafe.id} }}">Back to the cafes details</a>
+
+{% endblock %}
